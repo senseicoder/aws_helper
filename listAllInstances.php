@@ -33,15 +33,14 @@ foreach($a->Regions as $oRegion) {
 	$aRegions[] = $oRegion->RegionName;
 }
 
-
-
 foreach($aRegions as $sRegion) {
 	echo '# ' . $sRegion . "\n";
 	$sCmd = 'aws ec2 --region ' . $sRegion .' describe-instances';
 	$a = json_decode(shell_exec($sCmd));
 	foreach($a->Reservations as $oReservation) {
 		foreach($oReservation->Instances as $oInstance) {
-			printf("%s\t%s\t%s\t%s\t%s\t%s\n", 
+			printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\n", 
+				$oInstance->InstanceId,
 				TrouverNom($oInstance->Tags), 
 				$oInstance->State->Name, 
 				$oInstance->InstanceType,
